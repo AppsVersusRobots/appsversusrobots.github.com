@@ -1,12 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
+        <loc>http://AppsVersusRobots.github.io/blog/2013/08/06/hello-world/</loc>
+        <lastmod>2013-08-06T22:35:39-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://AppsVersusRobots.github.io/blog/archives/</loc>
-        <lastmod>2013-08-06T22:24:46-04:00</lastmod>
+        <lastmod>2013-08-06T22:35:39-04:00</lastmod>
     </url>
     <url>
         <loc>http://AppsVersusRobots.github.io/</loc>
-        <lastmod>2013-08-06T22:24:46-04:00</lastmod>
+        <lastmod>2013-08-06T22:35:39-04:00</lastmod>
     </url>
     <url>
         <loc>http://AppsVersusRobots.github.io/robots.txt</loc>

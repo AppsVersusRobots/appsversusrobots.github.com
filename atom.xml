@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[AppsVersusRobots]]></title>
   <link href="http://AppsVersusRobots.github.io/atom.xml" rel="self"/>
   <link href="http://AppsVersusRobots.github.io/"/>
-  <updated>2013-08-06T22:36:14-04:00</updated>
+  <updated>2013-08-06T22:45:55-04:00</updated>
   <id>http://AppsVersusRobots.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Adam Weeks]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>

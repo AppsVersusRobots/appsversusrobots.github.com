@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[AppsVersusRobots]]></title>
-  <link href="http://AppsVersusRobots.github.io/atom.xml" rel="self"/>
+  <title><![CDATA[Category: snippets | AppsVersusRobots]]></title>
+  <link href="http://AppsVersusRobots.github.io/blog/categories/snippets/atom.xml" rel="self"/>
   <link href="http://AppsVersusRobots.github.io/"/>
   <updated>2013-08-06T22:55:20-04:00</updated>
   <id>http://AppsVersusRobots.github.io/</id>
@@ -21,21 +21,12 @@
     <content type="html"><![CDATA[<p>Whenever I&rsquo;m in need of a good old fashioned loading screen, and I&rsquo;m not in the mood for
 really doing network communications, I will use this handy GCD trick.</p>
 
-<div><script src='https://gist.github.com/6166059.js'></script>
+<p><div><script src='https://gist.github.com/6166059.js'></script>
 <noscript><pre><code></code></pre></noscript></div>
-
+</p>
 
 <p>It isn&rsquo;t the prettiest solution, but sometimes you just want to get the feeling the user will
 be feeling while on a crappy network somewhere.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hello World]]></title>
-    <link href="http://AppsVersusRobots.github.io/blog/2013/08/06/hello-world/"/>
-    <updated>2013-08-06T22:32:00-04:00</updated>
-    <id>http://AppsVersusRobots.github.io/blog/2013/08/06/hello-world</id>
-    <content type="html"><![CDATA[<p>This is a new post about things. Yea.</p>
 ]]></content>
   </entry>
   

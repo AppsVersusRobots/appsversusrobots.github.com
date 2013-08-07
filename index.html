@@ -90,8 +90,15 @@ really doing network communications, I will use &hellip;">
 		<p>Whenever I&rsquo;m in need of a good old fashioned loading screen, and I&rsquo;m not in the mood for
 really doing network communications, I will use this handy GCD trick.</p>
 
-<div><script src='https://gist.github.com/6166059.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="n">NSInteger</span> <span class="n">delayTime</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="n">delayTime</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">),</span> <span class="n">dispatch_get_current_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
+</span><span class='line'>     <span class="p">[</span><span class="n">self</span> <span class="n">updateViewWithData</span><span class="p">];</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <p>It isn&rsquo;t the prettiest solution, but sometimes you just want to get the feeling the user will

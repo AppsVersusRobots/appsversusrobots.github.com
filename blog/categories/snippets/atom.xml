@@ -4,7 +4,7 @@
   <title><![CDATA[Category: snippets | AppsVersusRobots]]></title>
   <link href="http://AppsVersusRobots.github.io/blog/categories/snippets/atom.xml" rel="self"/>
   <link href="http://AppsVersusRobots.github.io/"/>
-  <updated>2013-08-06T23:18:24-04:00</updated>
+  <updated>2013-08-07T11:02:08-04:00</updated>
   <id>http://AppsVersusRobots.github.io/</id>
   <author>
     <name><![CDATA[Adam Weeks]]></name>
@@ -21,9 +21,15 @@
     <content type="html"><![CDATA[<p>Whenever I&rsquo;m in need of a good old fashioned loading screen, and I&rsquo;m not in the mood for
 really doing network communications, I will use this handy GCD trick.</p>
 
-<p><div><script src='https://gist.github.com/6166059.js'></script>
-<noscript><pre><code></code></pre></noscript></div>
-</p>
+<p>``` objective-c
+NSInteger delayTime = 2;
+dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delayTime * NSEC_PER_SEC), dispatch_get_current_queue(), ^{</p>
+
+<pre><code> [self updateViewWithData];
+</code></pre>
+
+<p>});
+```</p>
 
 <p>It isn&rsquo;t the prettiest solution, but sometimes you just want to get the feeling the user will
 be feeling while on a crappy network somewhere.</p>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: xcode | AppsVersusRobots]]></title>
+  <link href="http://AppsVersusRobots.github.io/blog/categories/xcode/atom.xml" rel="self"/>
+  <link href="http://AppsVersusRobots.github.io/"/>
+  <updated>2013-09-20T11:10:03-04:00</updated>
+  <id>http://AppsVersusRobots.github.io/</id>
+  <author>
+    <name><![CDATA[Adam Weeks]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[iOS 7 Findings]]></title>
+    <link href="http://AppsVersusRobots.github.io/blog/2013/09/20/ios-7-findings/"/>
+    <updated>2013-09-20T10:34:00-04:00</updated>
+    <id>http://AppsVersusRobots.github.io/blog/2013/09/20/ios-7-findings</id>
+    <content type="html"><![CDATA[<h2>Diving into iOS 7</h2>
+
+<p>While XCode 5 and iOS 7 beta have been out <a href="http://www.macrumors.com/2013/06/10/apple-releases-ios-7-beta-1-to-developers/">for a while</a>, I have been so busy
+that I haven&rsquo;t had the chance of diving into it. That is, until this week. I&rsquo;ve
+<a href="http://www.geekbinge.com/wp-content/uploads/2013/07/Andy-Dwyer-Dancing-Background.gif">LITERALLY</a> been compiling for iOS 7 SDK for 3 days, so if any of my findings are
+incorrect, feel free to let me know!</p>
+
+<h3>Pull To Refresh</h3>
+
+<p>I&rsquo;ve been using <a href="https://github.com/enormego/EGOTableViewPullRefresh">EGOTableViewPullRefresh</a> probably WAY past its prime and now it is showing.
+Here is the pre-iOS7 code that I was using:
+``` objective-c
+&ndash; (void)scrollViewDidScroll:(UIScrollView *)scrollView{</p>
+
+<pre><code>if (scrollView.isDragging) {
+    if (refreshHeaderView.state == EGOOPullRefreshPulling &amp;&amp; scrollView.contentOffset.y &gt; -65.0f &amp;&amp; scrollView.contentOffset.y &lt; 0.0f &amp;&amp; !_reloading) {
+        [refreshHeaderView setState:EGOOPullRefreshNormal];
+    } else if (refreshHeaderView.state == EGOOPullRefreshNormal &amp;&amp; scrollView.contentOffset.y &lt; -65.0f &amp;&amp; !_reloading) {
+        [refreshHeaderView setState:EGOOPullRefreshPulling];
+    }
+}
+</code></pre>
+
+<p>}</p>
+
+<ul>
+<li><p>(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{</p>
+
+<p>  if (scrollView.contentOffset.y &lt;= &ndash; 65.0f &amp;&amp; !<em>reloading) {
+      </em>reloading = YES;
+      //[self reloadTableViewDataSource];
+      [self reloadTableViewDataSource];
+      [refreshHeaderView setState:EGOOPullRefreshLoading];
+      [UIView beginAnimations:nil context:NULL];
+      [UIView setAnimationDuration:0.2];
+      self.tableView.contentInset = UIEdgeInsetsMake(60.0f, 0.0f, 0.0f, 0.0f);
+      [UIView commitAnimations];
+  }
+}</p></li>
+<li><p>(void)dataSourceDidFinishLoadingNewData{</p>
+
+<p>  _reloading = NO;</p>
+
+<p>  [UIView beginAnimations:nil context:NULL];
+  [UIView setAnimationDuration:.3];
+  [self.tableView setContentInset:UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f)];
+  [UIView commitAnimations];</p>
+
+<p>  [refreshHeaderView setState:EGOOPullRefreshNormal];
+  [refreshHeaderView setCurrentDate];<br/>
+}
+<code>
+All of those contentInsets tend to break things quite nastily on iOS7. I've now switched to a UIRefreshControl for
+my table views and all is well in the world
+</code> objective-c
+&ndash;(void)viewDidLoad
+{
+  self.refreshControl = [[UIRefreshControl alloc]init];
+  [self.refreshControl addTarget:self action:@selector(reloadData) forControlEvents:UIControlEventValueChanged];
+}
+&ndash;(void)reloadData
+{
+  [self.refreshControl beginRefreshing];
+  //Do the reload
+  [self.refreshControl endRefreshing];
+}
+```
+As you can see, all of the other cruft washes away and gets you my favorite kinds of commits &ldquo;6 lines added, 50 lines removed&rdquo;!</p></li>
+</ul>
+
+
+<h3>Table Cell Backgrounds</h3>
+
+<p>I rely a lot on my table backgrounds to provide my color for my table views. I usually don&rsquo;t have much design
+in each table cell. So, you can imagine my surprise when after compiling for iOS7, I see something like this:
+<img src="/images/posts/iOS7-white.png">
+AHHH! So much white!!! Luckily, I have most of my custom table cells done as classes, so in the initialization of the class,
+I simply have to:
+<code>
+self.backgroundColor = [UIColor clearColor];
+</code></p>
+
+<h3>Swipe Navigation</h3>
+
+<p>I actually really like the &ldquo;swipe to go back&rdquo; navigation methods in iOS7, but for those who don&rsquo;t or if you find a place where
+it might not be proper, you can disable it with:
+<code>
+self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+</code></p>
+
+<h3>Navigation Bar Coloring</h3>
+
+<p>There are now two different nav bar tinting properties:
+* tintColor = color of the back button, button titles and images
+* barTintColor = changes the color of the bar itself</p>
+
+<h3>That&rsquo;s All, For Now</h3>
+
+<p>I&rsquo;m sure I&rsquo;ll have plenty more to fill in on, but these were the first of my iOS 7 findings.</p>
+]]></content>
+  </entry>
+  
+</feed>

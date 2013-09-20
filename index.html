@@ -9,8 +9,8 @@
   <meta name="author" content="Adam Weeks">
 
   
-  <meta name="description" content="Whenever I&rsquo;m in need of a good old fashioned loading screen, and I&rsquo;m not in the mood for
-really doing network communications, I will use &hellip;">
+  <meta name="description" content="Diving into iOS 7 While XCode 5 and iOS 7 beta have been out for a while, I have been so busy
+that I haven&rsquo;t had the chance of diving into it. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +67,192 @@ really doing network communications, I will use &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/20/ios-7-findings/">iOS 7 Findings</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-20T10:34:00-04:00" pubdate data-updated="true">Sep 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Diving into iOS 7</h2>
+
+<p>While XCode 5 and iOS 7 beta have been out <a href="http://www.macrumors.com/2013/06/10/apple-releases-ios-7-beta-1-to-developers/">for a while</a>, I have been so busy
+that I haven&rsquo;t had the chance of diving into it. That is, until this week. I&rsquo;ve
+<a href="http://www.geekbinge.com/wp-content/uploads/2013/07/Andy-Dwyer-Dancing-Background.gif">LITERALLY</a> been compiling for iOS 7 SDK for 3 days, so if any of my findings are
+incorrect, feel free to let me know!</p>
+
+<h3>Pull To Refresh</h3>
+
+<p>I&rsquo;ve been using <a href="https://github.com/enormego/EGOTableViewPullRefresh">EGOTableViewPullRefresh</a> probably WAY past its prime and now it is showing.
+Here is the pre-iOS7 code that I was using:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">scrollViewDidScroll:</span><span class="p">(</span><span class="n">UIScrollView</span> <span class="o">*</span><span class="p">)</span><span class="nv">scrollView</span><span class="p">{</span>   
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">scrollView</span><span class="p">.</span><span class="n">isDragging</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">refreshHeaderView</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">EGOOPullRefreshPulling</span> <span class="o">&amp;&amp;</span> <span class="n">scrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mf">65.0f</span> <span class="o">&amp;&amp;</span> <span class="n">scrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mf">0.0f</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">_reloading</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="p">[</span><span class="n">refreshHeaderView</span> <span class="nl">setState:</span><span class="n">EGOOPullRefreshNormal</span><span class="p">];</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">refreshHeaderView</span><span class="p">.</span><span class="n">state</span> <span class="o">==</span> <span class="n">EGOOPullRefreshNormal</span> <span class="o">&amp;&amp;</span> <span class="n">scrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">65.0f</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">_reloading</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="p">[</span><span class="n">refreshHeaderView</span> <span class="nl">setState:</span><span class="n">EGOOPullRefreshPulling</span><span class="p">];</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">scrollViewDidEndDragging:</span><span class="p">(</span><span class="n">UIScrollView</span> <span class="o">*</span><span class="p">)</span><span class="nv">scrollView</span> <span class="nf">willDecelerate:</span><span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nv">decelerate</span><span class="p">{</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">scrollView</span><span class="p">.</span><span class="n">contentOffset</span><span class="p">.</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="o">-</span> <span class="mf">65.0f</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">_reloading</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">_reloading</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
+</span><span class='line'>        <span class="c1">//[self reloadTableViewDataSource];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">self</span> <span class="n">reloadTableViewDataSource</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">refreshHeaderView</span> <span class="nl">setState:</span><span class="n">EGOOPullRefreshLoading</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">UIView</span> <span class="nl">beginAnimations:</span><span class="nb">nil</span> <span class="nl">context:</span><span class="nb">NULL</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDuration:</span><span class="mf">0.2</span><span class="p">];</span>
+</span><span class='line'>        <span class="n">self</span><span class="p">.</span><span class="n">tableView</span><span class="p">.</span><span class="n">contentInset</span> <span class="o">=</span> <span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mf">60.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">UIView</span> <span class="n">commitAnimations</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">dataSourceDidFinishLoadingNewData</span><span class="p">{</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="n">_reloading</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">beginAnimations:</span><span class="nb">nil</span> <span class="nl">context:</span><span class="nb">NULL</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="nl">setAnimationDuration:</span><span class="mf">.3</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">tableView</span> <span class="nl">setContentInset:</span><span class="n">UIEdgeInsetsMake</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">)];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">UIView</span> <span class="n">commitAnimations</span><span class="p">];</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="p">[</span><span class="n">refreshHeaderView</span> <span class="nl">setState:</span><span class="n">EGOOPullRefreshNormal</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">refreshHeaderView</span> <span class="n">setCurrentDate</span><span class="p">];</span>
+</span><span class='line'> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All of those contentInsets tend to break things quite nastily on iOS7. I&rsquo;ve now switched to a UIRefreshControl for
+my table views and all is well in the world</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewDidLoad</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">refreshControl</span> <span class="o">=</span> <span class="p">[[</span><span class="n">UIRefreshControl</span> <span class="n">alloc</span><span class="p">]</span><span class="n">init</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">refreshControl</span> <span class="nl">addTarget:</span><span class="n">self</span> <span class="nl">action:</span><span class="k">@selector</span><span class="p">(</span><span class="n">reloadData</span><span class="p">)</span> <span class="nl">forControlEvents:</span><span class="n">UIControlEventValueChanged</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">reloadData</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">refreshControl</span> <span class="n">beginRefreshing</span><span class="p">];</span>
+</span><span class='line'>  <span class="c1">//Do the reload</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">refreshControl</span> <span class="n">endRefreshing</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you can see, all of the other cruft washes away and gets you my favorite kinds of commits &ldquo;6 lines added, 50 lines removed&rdquo;!</p>
+
+<h3>Table Cell Backgrounds</h3>
+
+<p>I rely a lot on my table backgrounds to provide my color for my table views. I usually don&rsquo;t have much design
+in each table cell. So, you can imagine my surprise when after compiling for iOS7, I see something like this:
+<img src="/images/posts/iOS7-white.png">
+AHHH! So much white!!! Luckily, I have most of my custom table cells done as classes, so in the initialization of the class,
+I simply have to:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="n">self</span><span class="p">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIColor</span> <span class="n">clearColor</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Swipe Navigation</h3>
+
+<p>I actually really like the &ldquo;swipe to go back&rdquo; navigation methods in iOS7, but for those who don&rsquo;t or if you find a place where
+it might not be proper, you can disable it with:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="n">self</span><span class="p">.</span><span class="n">navigationController</span><span class="p">.</span><span class="n">interactivePopGestureRecognizer</span><span class="p">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Navigation Bar Coloring</h3>
+
+<p>There are now two different nav bar tinting properties:
+* tintColor = color of the back button, button titles and images
+* barTintColor = changes the color of the bar itself</p>
+
+<h3>That&rsquo;s All, For Now</h3>
+
+<p>I&rsquo;m sure I&rsquo;ll have plenty more to fill in on, but these were the first of my iOS 7 findings.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -170,6 +356,10 @@ be feeling while on a crappy network somewhere.</p>
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/20/ios-7-findings/">iOS 7 Findings</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2013/08/06/simulating-network-latency/">Simulating Network Latency</a>

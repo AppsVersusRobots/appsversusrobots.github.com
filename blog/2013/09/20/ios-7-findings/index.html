@@ -1,24 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[AppsVersusRobots]]></title>
-  <link href="http://AppsVersusRobots.github.io/atom.xml" rel="self"/>
-  <link href="http://AppsVersusRobots.github.io/"/>
-  <updated>2013-09-20T11:10:03-04:00</updated>
-  <id>http://AppsVersusRobots.github.io/</id>
-  <author>
-    <name><![CDATA[Adam Weeks]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>iOS 7 Findings - AppsVersusRobots</title>
+  <meta name="author" content="Adam Weeks">
 
   
-  <entry>
-    <title type="html"><![CDATA[iOS 7 Findings]]></title>
-    <link href="http://AppsVersusRobots.github.io/blog/2013/09/20/ios-7-findings/"/>
-    <updated>2013-09-20T10:34:00-04:00</updated>
-    <id>http://AppsVersusRobots.github.io/blog/2013/09/20/ios-7-findings</id>
-    <content type="html"><![CDATA[<h2>Diving into iOS 7</h2>
+  <meta name="description" content="Diving into iOS 7 While XCode 5 and iOS 7 beta have been out for a while, I have been so busy
+that I haven&rsquo;t had the chance of diving into it. &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://AppsVersusRobots.github.io/blog/2013/09/20/ios-7-findings">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="AppsVersusRobots" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">AppsVersusRobots</a></h1>
+  
+    <h2>We make apps and things.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:AppsVersusRobots.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About Us</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">iOS 7 Findings</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-20T10:34:00-04:00" pubdate data-updated="true">Sep 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Diving into iOS 7</h2>
 
 <p>While XCode 5 and iOS 7 beta have been out <a href="http://www.macrumors.com/2013/06/10/apple-releases-ios-7-beta-1-to-developers/">for a while</a>, I have been so busy
 that I haven&rsquo;t had the chance of diving into it. That is, until this week. I&rsquo;ve
@@ -141,7 +216,7 @@ my table views and all is well in the world</p>
 
 <p>I rely a lot on my table backgrounds to provide my color for my table views. I usually don&rsquo;t have much design
 in each table cell. So, you can imagine my surprise when after compiling for iOS7, I see something like this:
-<img src="http://AppsVersusRobots.github.io/images/posts/iOS7-white.png">
+<img src="/images/posts/iOS7-white.png">
 AHHH! So much white!!! Luckily, I have most of my custom table cells done as classes, so in the initialization of the class,
 I simply have to:</p>
 
@@ -169,40 +244,151 @@ it might not be proper, you can disable it with:</p>
 <h3>That&rsquo;s All, For Now</h3>
 
 <p>I&rsquo;m sure I&rsquo;ll have plenty more to fill in on, but these were the first of my iOS 7 findings.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Simulating Network Latency]]></title>
-    <link href="http://AppsVersusRobots.github.io/blog/2013/08/06/simulating-network-latency/"/>
-    <updated>2013-08-06T22:51:00-04:00</updated>
-    <id>http://AppsVersusRobots.github.io/blog/2013/08/06/simulating-network-latency</id>
-    <content type="html"><![CDATA[<p>Whenever I&rsquo;m in need of a good old fashioned loading screen, and I&rsquo;m not in the mood for
-really doing network communications, I will use this handy GCD trick.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="n">NSInteger</span> <span class="n">delayTime</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-</span><span class='line'><span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="n">delayTime</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">),</span> <span class="n">dispatch_get_current_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>     <span class="p">[</span><span class="n">self</span> <span class="n">updateViewWithData</span><span class="p">];</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
+</div>
 
 
-<p>It isn&rsquo;t the prettiest solution, but sometimes you just want to get the feeling the user will
-be feeling while on a crappy network somewhere.</p>
-]]></content>
-  </entry>
+  <footer>
+    <p class="meta">
+      
   
-  <entry>
-    <title type="html"><![CDATA[Hello World]]></title>
-    <link href="http://AppsVersusRobots.github.io/blog/2013/08/06/hello-world/"/>
-    <updated>2013-08-06T22:32:00-04:00</updated>
-    <id>http://AppsVersusRobots.github.io/blog/2013/08/06/hello-world</id>
-    <content type="html"><![CDATA[<p>This is a new post about things. Yea.</p>
-]]></content>
-  </entry>
+
+<span class="byline author vcard">Posted by <span class="fn">Adam Weeks</span></span>
+
+      
+
+
+
+
+
+
+
+
   
-</feed>
+
+
+<time datetime="2013-09-20T10:34:00-04:00" pubdate data-updated="true">Sep 20<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios7/'>iOS7</a>, <a class='category' href='/blog/categories/xcode/'>xcode</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://AppsVersusRobots.github.io/blog/2013/09/20/ios-7-findings/" data-via="AdamWeeks" data-counturl="http://AppsVersusRobots.github.io/blog/2013/09/20/ios-7-findings/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/08/06/simulating-network-latency/" title="Previous Post: Simulating Network Latency">&laquo; Simulating Network Latency</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <p>A little something about me.</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/09/20/ios-7-findings/">iOS 7 Findings</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/06/simulating-network-latency/">Simulating Network Latency</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/06/hello-world/">Hello World</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/adamweeks">@adamweeks</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'adamweeks',
+            count: 1,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Adam Weeks -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

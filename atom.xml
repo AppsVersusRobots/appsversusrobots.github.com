@@ -4,7 +4,7 @@
   <title><![CDATA[AppsVersusRobots]]></title>
   <link href="http://AppsVersusRobots.github.io/atom.xml" rel="self"/>
   <link href="http://AppsVersusRobots.github.io/"/>
-  <updated>2013-09-20T11:31:41-04:00</updated>
+  <updated>2013-09-24T10:34:36-04:00</updated>
   <id>http://AppsVersusRobots.github.io/</id>
   <author>
     <name><![CDATA[Adam Weeks]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Custom Playback Icons on iOS 7]]></title>
+    <link href="http://AppsVersusRobots.github.io/blog/2013/09/24/custom-playback-icons-on-ios-7/"/>
+    <updated>2013-09-24T10:20:00-04:00</updated>
+    <id>http://AppsVersusRobots.github.io/blog/2013/09/24/custom-playback-icons-on-ios-7</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been having a HARD time getting remote control events for music apps to work properly on iOS 7.
+It doesn&rsquo;t matter the app, Spotify, Downcast, even Music.app won&rsquo;t let me control the playback
+via the media scrubber on the control center.</p>
+
+<p>Let me correct myself, it works for approximately an hour after doing a full reboot on the device.
+After that time, all playback controls seem to stop functioning. I finally decided to
+submit a bug report to apple because of this (others have told me they are having the same
+issue, but I wanted to formalize it). In the process of preparing a bug report with device
+logs and screen shots, I discovered something interesting!</p>
+
+<h2>The Discovery</h2>
+
+<p><img src="http://AppsVersusRobots.github.io/images/posts/custom-playback.png"> <br/>
+While this may look like your typical &ldquo;I&rsquo;m playing something&rdquo; lock screen, take a closer look.
+Instead of a back button, there is a star. This is because I&rsquo;m playing via iTunes Radio.
+This star allows you to basically &ldquo;favorite&rdquo; a song that is playing and tells iTunes to
+play more like that song.</p>
+
+<p>While I&rsquo;m no expert on MPMediaPlayback, I can&rsquo;t seem to recall having seen this ability before.
+A quick dive into the most recent documentation makes no mention of the ability to customize it.
+I also checked in the UIEvent Remote Control Event Types and there&rsquo;s nothing mentioned about
+a custom function.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="k">typedef</span> <span class="k">enum</span> <span class="p">{</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeNone</span>                              <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="n">UIEventSubtypeMotionShake</span>                       <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlPlay</span>                 <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlPause</span>                <span class="o">=</span> <span class="mi">101</span><span class="p">,</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlStop</span>                 <span class="o">=</span> <span class="mi">102</span><span class="p">,</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlTogglePlayPause</span>      <span class="o">=</span> <span class="mi">103</span><span class="p">,</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlNextTrack</span>            <span class="o">=</span> <span class="mi">104</span><span class="p">,</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlPreviousTrack</span>        <span class="o">=</span> <span class="mi">105</span><span class="p">,</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlBeginSeekingBackward</span> <span class="o">=</span> <span class="mi">106</span><span class="p">,</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlEndSeekingBackward</span>   <span class="o">=</span> <span class="mi">107</span><span class="p">,</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlBeginSeekingForward</span>  <span class="o">=</span> <span class="mi">108</span><span class="p">,</span>
+</span><span class='line'>   <span class="n">UIEventSubtypeRemoteControlEndSeekingForward</span>    <span class="o">=</span> <span class="mi">109</span><span class="p">,</span>
+</span><span class='line'><span class="p">}</span> <span class="n">UIEventSubtype</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>Could this be an upcoming feature added to SDK 7.1? If anyone has any more info about it,
+I&rsquo;d love to hear!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[iOS 7 Findings]]></title>

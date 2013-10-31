@@ -4,7 +4,7 @@
   <title><![CDATA[AppsVersusRobots]]></title>
   <link href="http://AppsVersusRobots.github.io/atom.xml" rel="self"/>
   <link href="http://AppsVersusRobots.github.io/"/>
-  <updated>2013-10-31T15:31:31-04:00</updated>
+  <updated>2013-10-31T15:37:11-04:00</updated>
   <id>http://AppsVersusRobots.github.io/</id>
   <author>
     <name><![CDATA[Adam Weeks]]></name>
@@ -53,6 +53,12 @@ menu bar being available on both.</p>
 *   Space 3 (Primary Monitor): BBEdit, iTerm, Sequel Pro
 *   Space 4 (Secondary): Messages, Twitterific, Textual
 </code></pre>
+
+<h3>Help</h3>
+
+<p>One minor thing that I can&rsquo;t seem to track down, but if you know please inform me: when
+disconnecting the secondary monitor, I&rsquo;d like the &ldquo;space 4&rdquo; apps to stay in their own
+space vs merging with &ldquo;space 1&rdquo;. If there is some way to do so, [@adamweeks].</p>
 ]]></content>
   </entry>
   

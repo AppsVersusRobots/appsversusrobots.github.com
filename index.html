@@ -9,8 +9,7 @@
   <meta name="author" content="Adam Weeks">
 
   
-  <meta name="description" content="When OSX Mavericks, was announced, I was excited about the multiple monitor support.
-Now that it is here, I&rsquo;m even more! I&rsquo;ve long used &hellip;">
+  <meta name="description" content="&ldquo;For the things we have to learn before we can do them, we learn by doing them&rdquo; -Aristotle Following this quote is usually how I find &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -25,7 +24,7 @@ Now that it is here, I&rsquo;m even more! I&rsquo;ve long used &hellip;">
   <link href="/atom.xml" rel="alternate" title="AppsVersusRobots" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
@@ -67,6 +66,67 @@ Now that it is here, I&rsquo;m even more! I&rsquo;ve long used &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/21/a-lesson-in-mvp-gravity-pilot/">A Lesson in MVP: Gravity Pilot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-21T12:24:18-04:00" pubdate data-updated="true">Apr 21<span>st</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>&ldquo;For the things we have to learn before we can do them, we learn by doing them&rdquo;</p>
+
+<p>-Aristotle</p></blockquote>
+
+<p>Following this quote is usually how I find myself learning new technologies.
+When Apple announced the <a href="https://developer.apple.com/library/ios/samplecode/DynamicsCatalog/Introduction/Intro.html">UIKit Dynamics</a> at WWDC 2013, I didn&rsquo;t really have a use for it in the apps that I was working on, but was very intrigued.</p>
+
+<p>Fast forward to February, I&rsquo;m using the Starbucks app, watching the stars fall into a glass, when I decide to try to use UIKit Dynamics to emulate it for the water logger feature of Calorie Count. So I get to work learning UIKD.</p>
+
+<p>With all the dynamics implemented, I have water bottles dropping into a giant cup, interacting with it and each other. It behaves very nicely and looks great. The next feature is to &ldquo;remove&rdquo; a water bottle from the glass. First, I just remove the last bottle added from the view, but since this is a learning experience, I decide that is too basic. Instead, I change the gravity affected on the last bottle to point upwards instead of downwards. This gives the bottle a nice floating away effect. During my testing, I find myself swapping the gravity on the bottle back and forth trying to keep the bottle hovering and bouncing up and down on the screen. Then it hit me, &ldquo;This would make a fun game!&rdquo;</p>
+
+<p><img src="/images/posts/gravity-pilot1.png"></p>
+
+<p>So my goal with this game is to turn the gravity switching into a points system. You get points for touching the scoring areas at the top and bottom of the screen, without touching the edge of the screen which &ldquo;kills&rdquo; your player.</p>
+
+<p>Quickly after starting development of this game in UIKit Dynamics, I realize, it isn&rsquo;t going to do what I want it to do. I take this opportunity to do another &ldquo;learning lesson&rdquo; and build the same game in <a href="https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013043-CH1-SW1">Sprite Kit</a>. In one night, I have a playable build that I send out to my friends. I also have a laundry list of features I want to implement within the game (Game Center, Leaderboards, Music, Graphics, etc.)! In walks <a href="http://twitter.com/mhmazur">Matt Mazur</a> with a simple idea, release it now.</p>
+
+<p>&ldquo;But, I don&rsquo;t have any cool features.&rdquo; &ldquo;No one will like it without all the extra stuff.&rdquo; &ldquo;I&rsquo;ve gotta have X feature, otherwise it will fail&rdquo; -ME</p>
+
+<p>&ldquo;Release it. Now.&rdquo; &ndash;<a href="http://twitter.com/mhmazur">Mazur</a></p>
+
+<p>So I suck up my pride and release a 1.0, devoid of anything but basic gameplay. Definitely a &ldquo;MVP&rdquo; (Minimum Viable Product) app. You know what? People are actually liking it! I&rsquo;m getting feature requests that I wouldn&rsquo;t have thought of. I&rsquo;m NOT getting feature requests for items that I thought I would.</p>
+
+<p>Version 1.1 is pending review from Apple with some of those features, but I&rsquo;ve got a nice core audience already hooked on the game that I wouldn&rsquo;t have had I not just &ldquo;released it&rdquo;.</p>
+
+<p><a href="http://bit.ly/gravitypilot">Download Gravity Pilot on the App Store for free now!</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -538,6 +598,10 @@ be feeling while on a crappy network somewhere.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/04/21/a-lesson-in-mvp-gravity-pilot/">A Lesson in MVP: Gravity Pilot</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/31/multiple-mavericks-monitors/">Multiple Mavericks Monitors</a>
       </li>
     
@@ -551,10 +615,6 @@ be feeling while on a crappy network somewhere.</p>
     
       <li class="post">
         <a href="/blog/2013/08/06/simulating-network-latency/">Simulating Network Latency</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/06/hello-world/">Hello World</a>
       </li>
     
   </ul>
@@ -599,7 +659,7 @@ be feeling while on a crappy network somewhere.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Adam Weeks -
+  Copyright &copy; 2014 - Adam Weeks -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

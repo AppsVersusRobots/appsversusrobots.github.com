@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Simulating Network Latency - AppsVersusRobots</title>
+  <title>A Lesson in MVP: Gravity Pilot - AppsVersusRobots</title>
   <meta name="author" content="Adam Weeks">
 
   
-  <meta name="description" content="Whenever I&rsquo;m in need of a good old fashioned loading screen, and I&rsquo;m not in the mood for
-really doing network communications, I will use &hellip;">
+  <meta name="description" content="&ldquo;For the things we have to learn before we can do them, we learn by doing them&rdquo; -Aristotle Following this quote is usually how I find &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ really doing network communications, I will use &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://AppsVersusRobots.github.io/blog/2013/08/06/simulating-network-latency">
+  <link rel="canonical" href="http://AppsVersusRobots.github.io/blog/2014/04/21/a-lesson-in-mvp-gravity-pilot">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="AppsVersusRobots" type="application/atom+xml">
@@ -70,7 +69,7 @@ really doing network communications, I will use &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Simulating Network Latency</h1>
+      <h1 class="entry-title">A Lesson in MVP: Gravity Pilot</h1>
     
     
       <p class="meta">
@@ -86,29 +85,39 @@ really doing network communications, I will use &hellip;">
   
 
 
-<time datetime="2013-08-06T22:51:00-04:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
+<time datetime="2014-04-21T12:24:18-04:00" pubdate data-updated="true">Apr 21<span>st</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Whenever I&rsquo;m in need of a good old fashioned loading screen, and I&rsquo;m not in the mood for
-really doing network communications, I will use this handy GCD trick.</p>
+<div class="entry-content"><blockquote><p>&ldquo;For the things we have to learn before we can do them, we learn by doing them&rdquo;</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="n">NSInteger</span> <span class="n">delayTime</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-</span><span class='line'><span class="n">dispatch_after</span><span class="p">(</span><span class="n">dispatch_time</span><span class="p">(</span><span class="n">DISPATCH_TIME_NOW</span><span class="p">,</span> <span class="n">delayTime</span> <span class="o">*</span> <span class="n">NSEC_PER_SEC</span><span class="p">),</span> <span class="n">dispatch_get_current_queue</span><span class="p">(),</span> <span class="o">^</span><span class="p">{</span>
-</span><span class='line'>     <span class="p">[</span><span class="n">self</span> <span class="n">updateViewWithData</span><span class="p">];</span>
-</span><span class='line'><span class="p">});</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>-Aristotle</p></blockquote>
 
+<p>Following this quote is usually how I find myself learning new technologies.
+When Apple announced the <a href="https://developer.apple.com/library/ios/samplecode/DynamicsCatalog/Introduction/Intro.html">UIKit Dynamics</a> at WWDC 2013, I didn&rsquo;t really have a use for it in the apps that I was working on, but was very intrigued.</p>
 
-<p>It isn&rsquo;t the prettiest solution, but sometimes you just want to get the feeling the user will
-be feeling while on a crappy network somewhere.</p>
+<p>Fast forward to February, I&rsquo;m using the Starbucks app, watching the stars fall into a glass, when I decide to try to use UIKit Dynamics to emulate it for the water logger feature of Calorie Count. So I get to work learning UIKD.</p>
+
+<p>With all the dynamics implemented, I have water bottles dropping into a giant cup, interacting with it and each other. It behaves very nicely and looks great. The next feature is to &ldquo;remove&rdquo; a water bottle from the glass. First, I just remove the last bottle added from the view, but since this is a learning experience, I decide that is too basic. Instead, I change the gravity affected on the last bottle to point upwards instead of downwards. This gives the bottle a nice floating away effect. During my testing, I find myself swapping the gravity on the bottle back and forth trying to keep the bottle hovering and bouncing up and down on the screen. Then it hit me, &ldquo;This would make a fun game!&rdquo;</p>
+
+<p><img src="/images/posts/gravity-pilot1.png"></p>
+
+<p>So my goal with this game is to turn the gravity switching into a points system. You get points for touching the scoring areas at the top and bottom of the screen, without touching the edge of the screen which &ldquo;kills&rdquo; your player.</p>
+
+<p>Quickly after starting development of this game in UIKit Dynamics, I realize, it isn&rsquo;t going to do what I want it to do. I take this opportunity to do another &ldquo;learning lesson&rdquo; and build the same game in <a href="https://developer.apple.com/library/ios/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013043-CH1-SW1">Sprite Kit</a>. In one night, I have a playable build that I send out to my friends. I also have a laundry list of features I want to implement within the game (Game Center, Leaderboards, Music, Graphics, etc.)! In walks <a href="http://twitter.com/mhmazur">Matt Mazur</a> with a simple idea, release it now.</p>
+
+<p>&ldquo;But, I don&rsquo;t have any cool features.&rdquo; &ldquo;No one will like it without all the extra stuff.&rdquo; &ldquo;I&rsquo;ve gotta have X feature, otherwise it will fail&rdquo; -ME</p>
+
+<p>&ldquo;Release it. Now.&rdquo; &ndash;<a href="http://twitter.com/mhmazur">Mazur</a></p>
+
+<p>So I suck up my pride and release a 1.0, devoid of anything but basic gameplay. Definitely a &ldquo;MVP&rdquo; (Minimum Viable Product) app. You know what? People are actually liking it! I&rsquo;m getting feature requests that I wouldn&rsquo;t have thought of. I&rsquo;m NOT getting feature requests for items that I thought I would.</p>
+
+<p>Version 1.1 is pending review from Apple with some of those features, but I&rsquo;ve got a nice core audience already hooked on the game that I wouldn&rsquo;t have had I not just &ldquo;released it&rdquo;.</p>
+
+<p><a href="http://bit.ly/gravitypilot">Download Gravity Pilot on the App Store for free now!</a></p>
 </div>
 
 
@@ -131,21 +140,15 @@ be feeling while on a crappy network somewhere.</p>
   
 
 
-<time datetime="2013-08-06T22:51:00-04:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
+<time datetime="2014-04-21T12:24:18-04:00" pubdate data-updated="true">Apr 21<span>st</span>, 2014</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/snippets/'>snippets</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://AppsVersusRobots.github.io/blog/2013/08/06/simulating-network-latency/" data-via="AdamWeeks" data-counturl="http://AppsVersusRobots.github.io/blog/2013/08/06/simulating-network-latency/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://AppsVersusRobots.github.io/blog/2014/04/21/a-lesson-in-mvp-gravity-pilot/" data-via="AdamWeeks" data-counturl="http://AppsVersusRobots.github.io/blog/2014/04/21/a-lesson-in-mvp-gravity-pilot/" >Tweet</a>
   
   
   
@@ -154,10 +157,8 @@ be feeling while on a crappy network somewhere.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/08/06/hello-world/" title="Previous Post: Hello World">&laquo; Hello World</a>
+        <a class="basic-alignment left" href="/blog/2013/10/31/multiple-mavericks-monitors/" title="Previous Post: Multiple Mavericks Monitors">&laquo; Multiple Mavericks Monitors</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/09/20/ios-7-findings/" title="Next Post: iOS 7 Findings">iOS 7 Findings &raquo;</a>
       
     </p>
   </footer>

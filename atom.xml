@@ -4,7 +4,7 @@
   <title><![CDATA[AppsVersusRobots]]></title>
   <link href="http://AppsVersusRobots.github.io/atom.xml" rel="self"/>
   <link href="http://AppsVersusRobots.github.io/"/>
-  <updated>2014-04-21T12:56:38-04:00</updated>
+  <updated>2014-04-25T15:50:33-04:00</updated>
   <id>http://AppsVersusRobots.github.io/</id>
   <author>
     <name><![CDATA[Adam Weeks]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Multiple Mavericks Monitors: Update!]]></title>
+    <link href="http://AppsVersusRobots.github.io/blog/2014/04/25/multiple-mavericks-monitors-update/"/>
+    <updated>2014-04-25T09:55:32-04:00</updated>
+    <id>http://AppsVersusRobots.github.io/blog/2014/04/25/multiple-mavericks-monitors-update</id>
+    <content type="html"><![CDATA[<p>Previously, I had ended my <a href="http://AppsVersusRobots.github.io/blog/2013/10/31/multiple-mavericks-monitors/">&ldquo;Multiple Mavericks Monitors&rdquo;</a> discussion with the
+question of:</p>
+
+<blockquote><p>One minor thing that I can&rsquo;t seem to track down, but if you know please inform me: when
+disconnecting the secondary monitor, I&rsquo;d like the &ldquo;space 4&rdquo; apps to stay in their own
+space vs merging with &ldquo;space 1&rdquo;.</p></blockquote>
+
+<p>I finally had the light bulb go off after sticking with
+my setup: &ldquo;move everything over!&rdquo;</p>
+
+<p>Back to my <a href="http://AppsVersusRobots.github.io/blog/2013/10/31/multiple-mavericks-monitors/">original post</a> on this topic, if you just &ldquo;++&rdquo; all of the spaces
+numbers, you will now have my current setup. This leaves &ldquo;space 1&rdquo; empty.
+&lsquo;Why would you want an empty space?&rsquo;, you might ask. That is because when you
+disconnect your external monitor, the &ldquo;space 4&rdquo; that was merging with &ldquo;space 1&rdquo;
+now will simply merge with an empty space. When you plug the external monitor
+back in, everything in that space moves back to where it was!</p>
+
+<p>Now I just have to retrain myself to use the ^+2 key command to switch
+to my &ldquo;email&rdquo; space!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Lesson in MVP: Gravity Pilot]]></title>

@@ -4,7 +4,7 @@
   <title><![CDATA[AppsVersusRobots]]></title>
   <link href="http://AppsVersusRobots.github.io/atom.xml" rel="self"/>
   <link href="http://AppsVersusRobots.github.io/"/>
-  <updated>2014-04-25T15:54:07-04:00</updated>
+  <updated>2014-05-19T23:12:00-04:00</updated>
   <id>http://AppsVersusRobots.github.io/</id>
   <author>
     <name><![CDATA[Adam Weeks]]></name>
@@ -12,6 +12,202 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Unwinding Segues: Wat?]]></title>
+    <link href="http://AppsVersusRobots.github.io/blog/2014/05/19/unwinding-segues-wat/"/>
+    <updated>2014-05-19T20:29:32-04:00</updated>
+    <id>http://AppsVersusRobots.github.io/blog/2014/05/19/unwinding-segues-wat</id>
+    <content type="html"><![CDATA[<p>I recently gave a talk at the <a href="http://www.meetup.com/Orlando-iOS-Developer-Group/events/175805382/">&ldquo;Orlando iOS Meetup&rdquo;</a> group about the
+magic that is &ldquo;Unwinding Segues&rdquo;. When I asked the group&rsquo;s leader, <a href="http://twitter.com/codefortravel">Andrew</a>
+if I could do a talk on them, he seemed as confused about them as I was
+just a few weeks prior. Here&rsquo;s what I discussed:</p>
+
+<blockquote><p>&ldquo;One dog goes one way, the other dog goes the other way&rdquo;
+-Goodfellas</p></blockquote>
+
+<p>For those familiar with storyboard segues, unwinding segues are the &ldquo;other way&rdquo;
+that you can go in your app. Segues allow us to navigate and animate between
+two view controllers in a storyboard. Before segues, we would have to write
+code such as:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">goToNextScreen:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nv">sender</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">NextViewController</span> <span class="o">*</span><span class="n">nextVC</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NextViewController</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController:</span><span class="n">nextVC</span> <span class="nl">animated:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, it is as easy as dragging a button to the view controller in the storyboard!
+But what if we want to get back to where we came from? Sure, we could just put in
+a quick &lsquo;pop&rsquo; from the NextViewController, but Apple suggests against that
+and it is just bad code. Also, what if you have data in NextViewController
+that you want to pass back to our main view controller? I&rsquo;m going to go over
+three valid options you have for navigating back and passing data: Delegates,
+Blocks and the new Unwinding Segues.</p>
+
+<h1>Options:</h1>
+
+<h3>Background</h3>
+
+<p>In the following example code, we will use <strong>MainViewController</strong> and <strong>NextViewController</strong> to
+represent the first and second view controllers. We&rsquo;ll
+simply be passing a string from NextViewController back to MainViewController
+and returning.</p>
+
+<h2>Delegates</h2>
+
+<p>Before iOS 4, there really wasn&rsquo;t any easy way (outside of NSNotifications,
+  but I said &lsquo;easy&rsquo;) to pass data between view controllers outside of delegate
+  methods. Delegate methods allow a view controller to say &ldquo;I respond to this
+  command, so you can call that command on me&rdquo;.</p>
+
+<p>  In NextViewController, we&rsquo;ll define a delegate protocol:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="k">@protocol</span> <span class="nc">NextDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
+</span><span class='line'><span class="err">@</span><span class="n">required</span>
+</span><span class='line'><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">nextViewController:</span><span class="p">(</span><span class="n">NextViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">controller</span> <span class="nl">readyWithString:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">string</span><span class="p">;</span>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, you implement it in the MainViewController</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">nextViewController:</span><span class="p">(</span><span class="n">NextViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">controller</span> <span class="nf">readyWithString:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">string</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">popViewControllerAnimated:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Call this from NextViewController when you are done with it</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">nextDelegate</span> <span class="nl">nextViewController:</span><span class="n">self</span> <span class="nl">readyWithString:</span><span class="s">@&quot;ready&quot;</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will send &ldquo;ready&rdquo; to MainViewController and MVC will pop the NVC off of
+the navigation stack. There is a little more setup to get this fully working,
+but we will skip it here. The code can be found in the sample project.</p>
+
+<p>If we wanted to change the way views were pushed and popped to, say, presented
+instead, the code would need to be changed on both the calling of NVC and the
+delegate method that returns back to MVC. Imagine how complicated it would get
+if you needed to get back two or three screens. We would need to make sure to
+capture how we got there to properly get back.</p>
+
+<h2>Blocks</h2>
+
+<p>Introduced in iOS 4, blocks allowed us pass around code as variables and
+execute it when we saw fit. This makes for some pretty portable code,
+unfortunately, we still have the issue of keeping track of how we got there.
+(More on that later.)</p>
+
+<p>For now, let&rsquo;s pass some data via blocks instead of defining delegates. We&rsquo;ll
+make a property on NVC that is a block of string processing code:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">stringReadyBlock</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">string</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When calling NVC from MVC, we&rsquo;ll define what we want to do with the string</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="n">__weak</span> <span class="n">__typeof__</span><span class="p">(</span><span class="n">self</span><span class="p">)</span> <span class="n">weakSelf</span> <span class="o">=</span> <span class="n">self</span><span class="p">;</span>
+</span><span class='line'><span class="n">NextViewController</span> <span class="o">*</span><span class="n">nextVC</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NextViewController</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">nextVC</span> <span class="nl">setStringReadyBlock:</span><span class="o">^</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">string</span><span class="p">){</span>
+</span><span class='line'>  <span class="n">weakSelf</span><span class="p">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">string</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">[</span><span class="n">weakSelf</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">popViewControllerAnimated:</span><span class="n">YES</span><span class="p">];</span>
+</span><span class='line'><span class="p">}];</span>
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">navigationController</span> <span class="nl">pushViewController:</span><span class="n">nextVC</span> <span class="nl">animated:</span><span class="n">YES</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that this is essentially the same code for what we did in the delegate
+implementation up above. (We are using weakSelf to keep any memory issues at bay.)
+But instead of having to define protocols and delegates,
+we simply pass a block of code to a property. We&rsquo;ll execute this code in NVC with:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="n">self</span><span class="p">.</span><span class="n">stringReadyBlock</span><span class="p">(</span><span class="s">@&quot;ready&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Personally, this is how I handle all non-storyboard view navigation because
+I just can&rsquo;t get enough of blocks.</p>
+
+<h2>Unwinding Segues</h2>
+
+<p>Storyboards got a lot of attention when iOS 6 came out, but unwinding segues
+seemed to fly under the radar. Marking a view controller as &lsquo;unwindable&rsquo; is as
+simple as implementing a method that matches a syntax. This code will be
+in our MVC, since that is where we want to <strong>UNWIND TO</strong>. This was probably
+the most confusing part for me to grasp, I always wanted to put this code in
+the last view controller, not the first.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">IBAction</span><span class="p">)</span><span class="nf">unwindWithString:</span><span class="p">(</span><span class="n">UIStoryboardSegue</span> <span class="o">*</span><span class="p">)</span><span class="nv">segue</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">NextViewController</span> <span class="o">*</span><span class="n">nextVC</span> <span class="o">=</span> <span class="p">(</span><span class="n">NextViewController</span> <span class="o">*</span><span class="p">)</span><span class="n">segue</span><span class="p">.</span><span class="n">sourceViewController</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">self</span><span class="p">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">nextVC</span><span class="p">.</span><span class="n">string</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this example, we&rsquo;ve moved our string to a property on NVC. Now we just need
+to tell the storyboard that we&rsquo;re ready to unwind. If you&rsquo;ve been using
+storyboards, you may have noticed a small green icon at the bottom of your
+view controllers that resembles the &lsquo;sharing&rsquo; icon in iOS. This is the view
+controller&rsquo;s &ldquo;exit&rdquo;. We will link up a button to our view controller&rsquo;s exit
+by control-dragging from the button to the exit. Storyboard will look down the
+presentation chain for the IBAction structure we defined above and let us
+link to that segue.
+<img src="http://AppsVersusRobots.github.io/images/posts/unwind.gif"></p>
+
+<p>Here&rsquo;s the great thing about unwinding segues, no matter how many view controllers
+you put in between MVC and NVC, regardless of how you push and present, the
+unwind will always take you right back to the beginning. There&rsquo;s no need to
+keep track of how you got there, because storyboard already knows.</p>
+
+<h2>Sample Project</h2>
+
+<p>These were just some sample code extracted from the project. You&rsquo;ll find the
+full example <a href="http://github.com/adamweeks"><strong>on github</strong></a>.</p>
+
+<h3>Thanks!</h3>
+
+<p>Hope you enjoyed this dive into unwinding segues. If you have any questions,
+concerns, comments, please contact me on twitter <a href="http://twitter.com/adamweeks">@adamweeks</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Multiple Mavericks Monitors: Update!]]></title>

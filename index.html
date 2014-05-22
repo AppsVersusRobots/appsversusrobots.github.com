@@ -181,13 +181,13 @@ and returning.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>This will send &ldquo;ready&rdquo; to MainViewController and MVC will pop the NVC off of
+<p>This will send &ldquo;ready&rdquo; to MainViewController and MainViewController will pop the NextViewController off of
 the navigation stack. There is a little more setup to get this fully working,
 but we will skip it here. The code can be found in the sample project.</p>
 
 <p>If we wanted to change the way views were pushed and popped to, say, presented
-instead, the code would need to be changed on both the calling of NVC and the
-delegate method that returns back to MVC. Imagine how complicated it would get
+instead, the code would need to be changed on both the calling of NextViewController and the
+delegate method that returns back to MainViewController. Imagine how complicated it would get
 if you needed to get back two or three screens. We would need to make sure to
 capture how we got there to properly get back.</p>
 
@@ -199,14 +199,14 @@ unfortunately, we still have the issue of keeping track of how we got there.
 (More on that later.)</p>
 
 <p>For now, let&rsquo;s pass some data via blocks instead of defining delegates. We&rsquo;ll
-make a property on NVC that is a block of string processing code:</p>
+make a property on NextViewController that is a block of string processing code:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="k">@property</span> <span class="p">(</span><span class="n">copy</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">stringReadyBlock</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">string</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>When calling NVC from MVC, we&rsquo;ll define what we want to do with the string</p>
+<p>When calling NextViewController from MainViewController, we&rsquo;ll define what we want to do with the string</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -228,7 +228,7 @@ make a property on NVC that is a block of string processing code:</p>
 <p>Notice that this is essentially the same code for what we did in the delegate
 implementation up above. (We are using weakSelf to keep any memory issues at bay.)
 But instead of having to define protocols and delegates,
-we simply pass a block of code to a property. We&rsquo;ll execute this code in NVC with:</p>
+we simply pass a block of code to a property. We&rsquo;ll execute this code in NextViewController with:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="n">self</span><span class="p">.</span><span class="n">stringReadyBlock</span><span class="p">(</span><span class="s">@&quot;ready&quot;</span><span class="p">);</span>
@@ -243,7 +243,7 @@ I just can&rsquo;t get enough of blocks.</p>
 <p>Storyboards got a lot of attention when iOS 6 came out, but unwinding segues
 seemed to fly under the radar. Marking a view controller as &lsquo;unwindable&rsquo; is as
 simple as implementing a method that matches a syntax. This code will be
-in our MVC, since that is where we want to <strong>UNWIND TO</strong>. This was probably
+in our MainViewController, since that is where we want to <strong>UNWIND TO</strong>. This was probably
 the most confusing part for me to grasp, I always wanted to put this code in
 the last view controller, not the first.</p>
 
@@ -260,7 +260,7 @@ the last view controller, not the first.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>In this example, we&rsquo;ve moved our string to a property on NVC. Now we just need
+<p>In this example, we&rsquo;ve moved our string to a property on NextViewController. Now we just need
 to tell the storyboard that we&rsquo;re ready to unwind. If you&rsquo;ve been using
 storyboards, you may have noticed a small green icon at the bottom of your
 view controllers that resembles the &lsquo;sharing&rsquo; icon in iOS. This is the view
@@ -271,14 +271,14 @@ link to that segue.
 <img src="/images/posts/unwind.gif"></p>
 
 <p>Here&rsquo;s the great thing about unwinding segues, no matter how many view controllers
-you put in between MVC and NVC, regardless of how you push and present, the
+you put in between MainViewController and NextViewController, regardless of how you push and present, the
 unwind will always take you right back to the beginning. There&rsquo;s no need to
 keep track of how you got there, because storyboard already knows.</p>
 
 <h2>Sample Project</h2>
 
 <p>These were just some sample code extracted from the project. You&rsquo;ll find the
-full example <a href="http://github.com/adamweeks"><strong>on github</strong></a>.</p>
+full example <a href="https://github.com/adamweeks/UnwindingSegue"><strong>on github</strong></a>.</p>
 
 <h3>Thanks!</h3>
 
